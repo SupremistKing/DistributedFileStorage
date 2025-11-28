@@ -1,5 +1,5 @@
 **Distributed File Storage System – Design Report**
-1. Replica Management Strategy
+**1. Replica Management Strategy**
 Topology and primaries
 The system simulates three data center servers:
 
@@ -18,7 +18,7 @@ Each Server has an alive flag (see Server.is_available). When a server goes down
 
 The helper method DistributedFileSystem.get_best_server_for_read selects the preferred (closest) data center if it is available; otherwise it falls back to any other available replica. This models geo-distributed read access while still maintaining resilience to data center failures.
 
-2. Quorum Enforcement and Primary-Based Writes
+**2. Quorum Enforcement and Primary-Based Writes**
 Quorum parameters
 The system uses a simple (N, R, W) quorum model:
 
@@ -39,7 +39,7 @@ Primary update – The primary Server applies the update (Server.apply_update), 
 Replica propagation (push-based) – The DFS calls apply_update on the other available replicas so they all converge on the same version and content.
 Because all writes are serialized through the primary and tagged with strictly increasing version numbers, the system avoids conflicting concurrent updates in this simulation. Any failed write (due to insufficient quorum) is not applied on any replica, so replicas never diverge into inconsistent versions.
 
-3. Client-Side Caching and Invalidation
+**3. Client-Side Caching and Invalidation**
 Client cache model
 Each client (client.py) maintains a simple in-memory cache:
 
@@ -69,7 +69,7 @@ The client then reads back the file’s metadata from the primary to discover th
 The client overwrites its local cache entry with the new content and version.
 Other clients that had cached that file receive invalidation callbacks and, on their next read, refresh from the latest version.
 
-4. Summary
+**4. Summary**
 The implemented system captures the key aspects of a real-world distributed file service:
 
 Replica management – Three fully replicated data centers with primary-based ownership per file.
