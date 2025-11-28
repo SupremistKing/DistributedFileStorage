@@ -1,5 +1,5 @@
-Distributed File Storage System – Design Report
-1. Replica Management Strategy
+*Distributed File Storage System – Design Report*
+*1. Replica Management Strategy*
 Topology and primaries
 The system simulates three data center servers:
 
